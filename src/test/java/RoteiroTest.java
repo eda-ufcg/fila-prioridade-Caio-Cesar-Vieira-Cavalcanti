@@ -1,6 +1,5 @@
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import java.util.Arrays;
 
 public class RoteiroTest {
     
@@ -105,4 +104,158 @@ public class RoteiroTest {
 
 	}
 
+	@Test
+	public void TestHeap(){
+		HeapFilaPrioridade heap = new HeapFilaPrioridade(5);
+
+		try{
+			heap.removeNext();
+			fail("this line cannot execute");
+		}catch(RuntimeException r){
+			assertEquals("Empty heap", r.getMessage());
+		}
+			
+		heap.add("a", 1);
+		heap.add("b", 2);
+		heap.add("c", 3);
+		heap.add("d", 4);
+		heap.add("e", 5);
+
+		assertEquals("e", heap.removeNext());
+		assertEquals("d", heap.removeNext());
+		assertEquals("c", heap.removeNext());
+		assertEquals("b", heap.removeNext());
+		assertEquals("a", heap.removeNext());
+
+		//Insering in a different order
+		heap.add("a", 0);
+		heap.add("b", 5);
+		heap.add("c", 1);
+		heap.add("d", 3);
+		heap.add("e", 2);
+
+		assertEquals("b", heap.removeNext());
+		assertEquals("d", heap.removeNext());
+		assertEquals("e", heap.removeNext());
+		assertEquals("c", heap.removeNext());
+		assertEquals("a", heap.removeNext());
+
+		//Checking resize
+		heap.add("a", 1);
+		heap.add("b", 2);
+		heap.add("c", 3);
+		heap.add("d", 4);
+		heap.add("e", 5);
+		heap.add("f", 6);
+		heap.add("g", 7);
+
+		assertEquals("g", heap.removeNext());
+		assertEquals("f", heap.removeNext());
+		assertEquals("e", heap.removeNext());
+		assertEquals("d", heap.removeNext());
+		assertEquals("c", heap.removeNext());
+		assertEquals("b", heap.removeNext());
+		assertEquals("a", heap.removeNext());
+	}
+
+	@Test
+	public void TestInsereFinal(){
+		InsereFinalFilaPrioridade fila = new InsereFinalFilaPrioridade(5);
+			
+		fila.add("a", 1);
+		fila.add("b", 2);
+		fila.add("c", 3);
+		fila.add("d", 4);
+		fila.add("e", 5);
+
+		assertEquals("e", fila.removeNext());
+		assertEquals("d", fila.removeNext());
+		assertEquals("c", fila.removeNext());
+		assertEquals("b", fila.removeNext());
+		assertEquals("a", fila.removeNext());
+
+		//Insering in a different order
+		fila.add("a", 0);
+		fila.add("b", 5);
+		fila.add("c", 1);
+		fila.add("d", 3);
+		fila.add("e", 2);
+
+		assertEquals("b", fila.removeNext());
+		assertEquals("d", fila.removeNext());
+		assertEquals("e", fila.removeNext());
+		assertEquals("c", fila.removeNext());
+		assertEquals("a", fila.removeNext());
+
+	}
+
+	@Test
+	public void TestInsereOrdenado(){
+		InsereOrdenadoFilaPrioridade fila = new InsereOrdenadoFilaPrioridade(5);
+			
+		fila.add("a", 1);
+		fila.add("b", 2);
+		fila.add("c", 3);
+		fila.add("d", 4);
+		fila.add("e", 5);
+
+		assertEquals("e", fila.removeNext());
+		assertEquals("d", fila.removeNext());
+		assertEquals("c", fila.removeNext());
+		assertEquals("b", fila.removeNext());
+		assertEquals("a", fila.removeNext());
+
+		//Insering in a different order
+		fila.add("a", 0);
+		fila.add("b", 5);
+		fila.add("c", 1);
+		fila.add("d", 3);
+		fila.add("e", 2);
+
+		assertEquals("b", fila.removeNext());
+		assertEquals("d", fila.removeNext());
+		assertEquals("e", fila.removeNext());
+		assertEquals("c", fila.removeNext());
+		assertEquals("a", fila.removeNext());
+
+		//Checking resize
+		fila.add("a", 1);
+		fila.add("b", 2);
+		fila.add("c", 3);
+		fila.add("d", 4);
+		fila.add("e", 5);
+		fila.add("f", 6);
+		fila.add("g", 7);
+		
+		assertEquals(7, fila.size());
+		
+		assertEquals("g", fila.removeNext());
+		assertEquals("f", fila.removeNext());
+		assertEquals("e", fila.removeNext());
+		assertEquals("d", fila.removeNext());
+		assertEquals("c", fila.removeNext());
+		assertEquals("b", fila.removeNext());
+		assertEquals("a", fila.removeNext());
+
+		// Head and Tail tests (resize test)
+		fila = new InsereOrdenadoFilaPrioridade(5);
+		
+		fila.add("a", 1);
+		fila.add("b", 2);
+		fila.add("c", 3);
+		fila.add("d", 4);
+		fila.add("e", 5);
+
+		assertTrue(fila.isFull());
+		
+		assertEquals("e", fila.removeNext());
+
+		fila.add("f", 1);
+
+		assertTrue(fila.isFull());
+
+		fila.add("g", 1);
+
+		assertEquals("d", fila.removeNext());
+	}
 }

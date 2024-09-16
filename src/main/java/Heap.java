@@ -54,7 +54,7 @@ public class Heap {
 
   public String remove() {
     if (isEmpty())
-      throw new RuntimeException("Empty");
+      throw new RuntimeException("Empty heap");
     String element = this.heap[0].getElemento();
     this.heap[0] = this.heap[tail];
     this.tail -= 1;
